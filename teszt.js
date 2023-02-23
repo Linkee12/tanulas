@@ -24,7 +24,8 @@ function kalmo() {
 function render() {
   let send = localStorage.getItem("list");
   send = send.split(";");
-  for (let i = 0; i < send.length; i++) {
+  for (let i = 0; i < send.length - 1; i++) {
     todo.innerHTML += i + "." + send[i] + "<br>";
+    console.log(i);
   }
 }

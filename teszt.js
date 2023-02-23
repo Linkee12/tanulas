@@ -1,4 +1,5 @@
 let input = document.getElementById("inputlist");
+let button = document.getElementById("button");
 let todo = document.getElementById("todo");
 let data = localStorage.getItem("list");
 render();
@@ -6,6 +7,11 @@ input.addEventListener("keypress", (e) => {
   if (e.code === "Enter") {
     kalmo();
   }
+});
+
+button.addEventListener("click", function () {
+  todo.innerHTML = "";
+  localStorage.clear();
 });
 
 function kalmo() {

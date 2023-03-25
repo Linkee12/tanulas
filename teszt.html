@@ -10,12 +10,53 @@
 font-size: 50px;
 font-family: 'Coursive';
    } 
+   #teszt{
+      width: 300px;
+      
+   }
+   .textdiv{
+      flex:1
+   }
+   .line{
+      background-color: rgb(10, 240, 106);
+      width: 500px;
+      height: 50px;
+      border-radius: 5px;
+      margin: 2px;
+      font-size: 40px;
+      padding:5px 10px;
+      display:flex;
+      
+   }
+   .line:nth-child(even){
+      background-color: rgb(240, 236, 6);
+   }
+   .tex {
+      background-color: rgba(101, 102, 71, 0.534);
+      width: 500px;
+      height: 50px;
+      border-radius: 5px;
+      margin: 2px;
+      font-size: 40px;
+      padding:5px 10px
+ 
+}
+  .del,.edit{
+   background: none;
+   border: none;
+   cursor: pointer;
+  }
+
+  .editing{
+   opacity: 0.5;
+  }
+  
 </style>
 </head>
 <body>
-        <div id=todo class="lista">
-            
-        </div> 
+     <div id="teszt"></div>  
+  
+       
         <input class="tex" id="inputlist" placeholder="Ird ide a teendőidet" ></input>
         <input type="button" id="button" value="Törlés">
     </div>

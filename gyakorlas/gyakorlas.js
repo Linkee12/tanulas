@@ -65,26 +65,75 @@ howManyElemInArray(array, 2);
 
 //6. feladat 2 tömb  közös elemeinek száma
 const array1 = [1, 2, 3, 123, 5, 34, 6];
-const array2 = [1, 2, 5];
-let x = 0;
+const array2 = [1, 2, 2, 2, 5];
 let common = [];
 function commonElement(array1, array2) {
-  if (array1.length > array2.length) {
-    for (i of array1) {
-      for (j of array2) {
+  {
+    for (let i of array1) {
+      for (let j of array2) {
         if (i === j) {
-          for (k of common) {
-            if (k != i) {
-              common.push(i);
-              ++x;
-            }
-          }
+          common.push(i);
         }
       }
     }
   }
-
-  return x;
+  let xxxx = 0;
+  for (let x of common) {
+    for (let i = 0; i < common.length; ++i) {
+      if (common[i] === x) {
+        xxxx++;
+        if (xxxx > 1) {
+          common.splice(i, 1);
+          xxxx = 0;
+        }
+      }
+    }
+  }
+  return common.length;
 }
 
 console.log(commonElement(array1, array2));
+
+//7 feladat 2 tömb külömbségének száma
+const array3 = [1, 1, 2, 3, 5, 6, 6, 6, 78, 8, 9];
+const array4 = [1, 1, 2, 3, 45, 65, 64, , 3, 7, 8];
+
+function arrayDifference(array1, array2) {
+  const first = array1.length - commonElement(array3, array4);
+  const second = array2.length - commonElement(array3, array4);
+  return console.log(
+    "Elsö tömb elemeinek száma:",
+    first,
+    "Második tömb elemeinek száma:",
+    second
+  );
+}
+arrayDifference(array3, array4);
+
+// 8 as feladat 1 tömb elemeinek átlaga
+function avarage(array) {
+  let x = 0;
+  for (let y of array) {
+    x = x + y;
+  }
+  x = x / array.length;
+  return x;
+}
+console.log("Átlag:", avarage(array3));
+
+//9 feladat hány 3 al osztahto de 5 el nem oszthato szám van
+
+function isDivider(array) {
+  let y = 0;
+  for (let x of array) {
+    if (x % 3 === 0 && x % 5 === 1) {
+      ++y;
+    } else if (x === 3) {
+      ++y;
+    }
+  }
+  return y;
+}
+console.log("9. Feladat", isDivider(array4));
+let asd = 15 % 5;
+console.log(asd);

@@ -7,7 +7,6 @@
  * @property {number} birthdate
  */
 
-////////////////////read csv
 const fs = require("fs");
 const { parse } = require("path");
 fs.readFile("csv.csv", "utf8", (err, data) => {
@@ -15,15 +14,13 @@ fs.readFile("csv.csv", "utf8", (err, data) => {
     console.error(err);
     return;
   }
-  getArray(data, 2);
+  createArrayFromCsv(data, 2);
 });
-////////////////////get array
 
-function getArray(data) {
-  const writeableData = data;
+function createArrayFromCsv(data) {
   const result = [];
   const lines = data.split("\n");
-  let headers = lines[0].split(";");
+  const headers = lines[0].split(";");
 
   lines.map((l) => {
     const obj = {};
@@ -38,9 +35,9 @@ function getArray(data) {
   result.shift();
   input(result, data);
 }
-////////////////////create readline
-const readline = require("readline");
 
+const readline = require("readline");
+/**Create readline */
 async function getAnswer(question) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -71,7 +68,7 @@ async function input(result, data) {
       const name = await getAnswer("First name?: ");
       console.log(getAgeFromName(result, name));
     } else if (number === 4) {
-      console.log(createTable(result));
+      console.table(result);
     } else if (number === 5) {
       const fname = await getAnswer("First name?");
       const lname = await getAnswer("Last name?");
@@ -86,13 +83,12 @@ async function input(result, data) {
     }
   }
 }
-////////////////////getage
+
 function getAllAge(array) {
-  let birthday = [];
-  array.map((e) => birthday.push(e.birthdate));
+  let birthday = array.map((e) => e.birthdate);
   return Avarage(birthday);
 }
-////////////////////get age from firstname
+
 function getAgeFromName(array, name) {
   let birthday = [];
   let help = 0;
@@ -108,39 +104,31 @@ function getAgeFromName(array, name) {
     return "Person is not found";
   }
 }
-////////////////////get varage array
+/**Get avarage age */
 function Avarage(birthday) {
   birthday = birthday.map((e) => e.split("-"));
   for (let i = 0; i < birthday.length; ++i) {
     birthday[i] = birthday[i].map((element) => parseInt(element));
   }
   let today = (+new Date() / 1000) | 0;
-  let summ = 0;
+  let sum = 0;
   let divisor = 0;
   for (let i = 0; i < birthday.length; ++i) {
     let birthdate = +new Date(birthday[i]) / 1000;
     let age = ((today - birthdate) / 60 / 60 / 24 / 365) | 0;
-    summ = summ + age;
+    sum = sum + age;
     divisor++;
   }
-  summ = summ / divisor;
-  return summ;
+  sum = sum / divisor;
+  return sum;
 }
 
-////////////////////creat table from csv
-function createTable(csv) {
-  const table = require("console");
-  console.table(csv);
-
-  return table;
-}
-
-////////////////////ADD MEMBER
-function editCsv(fname, lname, mail, birthdate, array) {
+/**Add member */
+function editCsv(fname, lname, mail, birthdate, csvToArray) {
   const fs = require("fs");
   const content =
     "\n" +
-    getNextId(array) +
+    getNextId(csvToArray) +
     ";" +
     fname +
     ";" +
@@ -156,7 +144,7 @@ function editCsv(fname, lname, mail, birthdate, array) {
     }
   });
 }
-////////////////////DELETE MEMBER
+
 function deleteMember(data, id) {
   const fs = require("fs");
   id = id.toString();
@@ -177,9 +165,9 @@ function deleteMember(data, id) {
   });
 }
 
-function getNextId(array) {
+function getNextId(csvToArray) {
   let x = 0;
-  array.map((e) => {
+  csvToArray.forEach((e) => {
     if (e.id > x) {
       x = e.id;
     }

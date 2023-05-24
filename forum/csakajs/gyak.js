@@ -86,35 +86,34 @@ async function input(result, data) {
 
 function getAllAge(array) {
   let birthday = array.map((e) => e.birthdate);
-  return Avarage(birthday);
+  return avarage(birthday);
 }
 
 function getAgeFromName(array, name) {
-  let birthday = [];
   let help = 0;
-  array.map((e) => {
+  let birthday = array.map((e) => {
     if (e.first_name === name) {
-      birthday.push(e.birthdate);
+      e.birthdate;
       ++help;
     }
   });
   if (help != 0) {
-    return Avarage(birthday);
+    return avarage(birthday);
   } else {
     return "Person is not found";
   }
 }
 /**Get avarage age */
-function Avarage(birthday) {
-  birthday = birthday.map((e) => e.split("-"));
-  for (let i = 0; i < birthday.length; ++i) {
-    birthday[i] = birthday[i].map((element) => parseInt(element));
+function avarage(birthday) {
+  let birthdate = birthday.map((e) => e.split("-"));
+  for (let i = 0; i < birthdate.length; ++i) {
+    birthdate[i] = birthdate[i].map((element) => parseInt(element));
   }
   let today = (+new Date() / 1000) | 0;
   let sum = 0;
   let divisor = 0;
-  for (let i = 0; i < birthday.length; ++i) {
-    let birthdate = +new Date(birthday[i]) / 1000;
+  for (let i = 0; i < birthdate.length; ++i) {
+    let birthdate = +new Date(birthdate[i]) / 1000;
     let age = ((today - birthdate) / 60 / 60 / 24 / 365) | 0;
     sum = sum + age;
     divisor++;

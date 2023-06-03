@@ -15,6 +15,7 @@ fs.readFile("csv.csv", "utf8", (err, data) => {
     return;
   }
   createArrayFromCsv(data, 2);
+  input(createArrayFromCsv(data), data);
 });
 
 function createArrayFromCsv(data) {
@@ -33,7 +34,7 @@ function createArrayFromCsv(data) {
     result.push(obj);
   });
   result.shift();
-  input(result, data);
+  return result;
 }
 
 const readline = require("readline");
@@ -63,7 +64,7 @@ async function input(result, data) {
     } else if (number === 1) {
       console.log("Hello world!!!");
     } else if (number === 2) {
-      console.log("Avarage age:" + getAllAge(result));
+      console.log("average age:" + getAllAge(result));
     } else if (number === 3) {
       const name = await getAnswer("First name?: ");
       console.log(getAgeFromName(result, name));
@@ -86,38 +87,34 @@ async function input(result, data) {
 
 function getAllAge(array) {
   let birthday = array.map((e) => e.birthdate);
-  return avarage(birthday);
+  let average = birthday.map((e) => getAge(e));
+  return getAverage(average);
 }
 
-function getAgeFromName(array, name) {
-  let help = 0;
-  let birthday = array.map((e) => {
-    if (e.first_name === name) {
-      e.birthdate;
-      ++help;
-    }
-  });
-  if (help != 0) {
-    return avarage(birthday);
+function getAgeFromName(users, firstName) {
+  let birthdays = users
+    .filter((user) => user.first_name === firstName)
+    .map((user) => user.birthdate);
+  if (birthdays.length > 0) {
+    return getAllAge(birthdays);
   } else {
     return "Person is not found";
   }
 }
-/**Get avarage age */
-function avarage(birthday) {
-  let birthdate = birthday.map((e) => e.split("-"));
-  for (let i = 0; i < birthdate.length; ++i) {
-    birthdate[i] = birthdate[i].map((element) => parseInt(element));
-  }
+function getAge(date) {
+  let birthdate = (+new Date(date) / 1000) | 0;
   let today = (+new Date() / 1000) | 0;
+  let age = ((today - birthdate) / 60 / 60 / 24 / 365) | 0;
+  return age;
+}
+
+function getAverage(numbers) {
   let sum = 0;
   let divisor = 0;
-  for (let i = 0; i < birthdate.length; ++i) {
-    let birthdate = +new Date(birthdate[i]) / 1000;
-    let age = ((today - birthdate) / 60 / 60 / 24 / 365) | 0;
-    sum = sum + age;
-    divisor++;
-  }
+  numbers.forEach((e) => {
+    sum = sum + e;
+    ++divisor;
+  });
   sum = sum / divisor;
   return sum;
 }
